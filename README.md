@@ -1,243 +1,180 @@
 # 🚆 RailConnect  
-### A Relational Database Management System for Railway Operations
+### A Relational Database Management System Project
+
+RailConnect is a web-based Railway Management System developed to demonstrate practical implementation of core **Database Management System (DBMS)** concepts.
+
+The system integrates a **MySQL relational database**, a **Python Flask backend**, and a responsive frontend built with **HTML, Tailwind CSS, and JavaScript**.
+
+This project focuses on understanding how relational databases power real-world applications such as railway reservation systems.
 
 
-RailConnect is a web-based Railway Management System developed to understand and implement core **Database Management System (DBMS)** concepts in a practical way.
+## 📌 Project Objective
 
-This project connects a **MySQL relational database** with a **Python Flask backend** and a responsive frontend built using **HTML, Tailwind CSS, and JavaScript**.
+The main objective of RailConnect is to:
 
-The main purpose of this project is to demonstrate how relational databases work in real-world systems like railway reservation platforms.
+- Design a normalized relational database schema  
+- Implement complete CRUD operations  
+- Maintain referential integrity using foreign keys  
+- Connect backend logic with database securely  
+- Build a full-stack application using three-tier architecture  
 
-📄 Full Project Report: [DBMS_Report.pdf](./DBMS_Report.pdf)
-
-
-# 📌 Project Overview
-
-Railways are one of the most important transportation systems. Managing train schedules, passengers, and seat availability manually can be complex and error-prone.
-
-RailConnect automates:
-
-- Train scheduling  
-- Passenger registration  
-- Ticket booking  
-- Seat management  
-- Admin control panel  
-
-This project focuses on implementing:
-
-- Database normalization  
-- Primary & Foreign keys  
-- Referential integrity  
-- ACID properties  
-- CRUD operations  
-- Full-stack integration  
-
-
-# 🏗️ System Architecture
+## 🏗️ System Architecture
 
 RailConnect follows a **Three-Tier Architecture**:
 
-Frontend (HTML, CSS, JavaScript)  
+**Frontend (HTML, CSS, JavaScript)**  
 ↓  
-Backend (Python Flask)  
+**Backend (Python Flask)**  
 ↓  
-Database (MySQL Server 8.0)
+**Database (MySQL 8.0)**  
 
-### 1️ Presentation Layer (Frontend)
-- HTML5  
-- Tailwind CSS  
-- Vanilla JavaScript  
-- Fetch API for backend communication  
+### Tech Stack
 
-### 2️ Application Layer (Backend)
-- Python  
-- Flask Framework  
-- MySQL Connector  
-- REST API endpoints  
-
-### 3️ Data Layer (Database)
-- MySQL 8.0  
-- Normalized relational schema  
-- Foreign key constraints  
-- ON DELETE CASCADE  
-
-
-# 🗄️ Database Design
-
-The database is the core of this system.
-
-## Main Entities
-
-### 👤 Users
-Stores login credentials and profile information.
-
-### 🚆 Trains
-Stores train number, source, destination, seat availability, price, and delay.
-
-### 🎫 Bookings
-Links users and trains through foreign keys.
-
-
-## 🔗 Relationships
-
-- One User → Many Bookings (1:N)
-- One Train → Many Bookings (1:N)
-
-Foreign keys ensure:
-- No invalid booking can exist
-- Data consistency is maintained
-- Referential integrity is preserved
-
-`ON DELETE CASCADE` ensures that when a train is deleted, all related bookings are automatically removed.
+| Layer       | Technology |
+|------------|------------|
+| Frontend   | HTML5, Tailwind CSS, JavaScript |
+| Backend    | Python, Flask |
+| Database   | MySQL 8.0 |
 
 
 
-# ⚙️ Core Functionalities (CRUD Operations)
+## 🗄️ Database Design
 
-## ✅ CREATE
+The system is built around three core entities:
+
+### 👤 Users  
+Stores login credentials and user details.
+
+### 🚆 Trains  
+Stores train information such as route, date, seat availability, price, and delay.
+
+### 🎫 Bookings  
+Links users and trains using foreign keys.
+
+### Relationships
+
+- One User → Many Bookings (1:N)  
+- One Train → Many Bookings (1:N)  
+
+Foreign key constraints ensure relational consistency.  
+`ON DELETE CASCADE` prevents orphan booking records when a train is removed.
+
+
+
+## ⚙️ Core Functionalities
+
+### ✅ Create
 - User Registration  
 - Add Train (Admin)  
 - Book Ticket  
 
-## 📖 READ
-- Login Verification  
+### 📖 Read
+- Login Authentication  
 - View Available Trains  
-- View My Bookings (JOIN query used)  
+- View User Bookings (SQL JOIN used)  
 
-## 🔄 UPDATE
+### 🔄 Update
 - Automatic seat decrement during booking  
-- Delay updates  
+- Real-time seat availability  
 
-## ❌ DELETE
+### ❌ Delete
 - Admin can delete trains  
-- Related bookings auto-delete (CASCADE)  
+- Related bookings auto-delete via CASCADE  
 
 
-# 🔌 Backend & Database Connectivity
+## 🔌 Backend & API Design
 
-- Parameterized queries (`%s`) used to prevent SQL injection  
-- Each request creates and closes a database connection properly  
-- Flask APIs handle JSON data  
+- Parameterized SQL queries prevent SQL Injection  
+- REST API endpoints built using Flask  
+- JSON-based frontend-backend communication  
+- Controlled database connection lifecycle  
 
-### Important API Endpoints
-
+Key Endpoints:
 - `/api/register`
 - `/api/login`
 - `/api/book`
 
-Seat booking is handled carefully to avoid race conditions.
+Seat booking logic ensures atomic updates to avoid inconsistent seat counts.
 
 
-# 🖥️ User Interface
 
-## 🔐 Split-Screen Login
+# 🖥️ Application Screens
 
-![Login Screen](images/login.png)
+## 🔐 Login Screen
 
+![Login Screen](mainpage.png)
+
+The main landing page provides:
 - Passenger Login  
 - Admin Login  
-- Registration Form  
-- Responsive layout  
+- Registration access  
+- Responsive split-screen design  
 
 
-## 👤 Passenger Dashboard
+## 👤 Create New User
 
-![Passenger Dashboard](images/passenger_dashboard.png)
+![Create User](createuser.png)
 
-Features:
-- Search by source, destination, date  
-- Real-time seat availability  
-- Delay indicator  
-- PNR tracking  
+Users can:
+- Register with personal details  
+- Validate input fields  
+- Create secure login credentials  
 
 
-## 🛠️ Admin Dashboard
 
-![Admin Dashboard](images/admin_dashboard.png)
+## 🎫 Book Train
 
-Features:
-- Train statistics  
-- Add new train  
-- Delete train  
+![Book Train](booktrainu.jpg)
+
+Passengers can:
+- Search trains by source and destination  
 - View seat availability  
+- Book tickets  
+- Generate PNR  
+- Automatically update seat count  
 
 
-
-# 🔄 End-to-End Workflow
+## 🔄 End-to-End Workflow
 
 1. User registers  
-2. Data is validated  
-3. Record inserted into MySQL  
-4. User logs in  
-5. Searches train  
-6. Books ticket  
-7. Backend checks seat availability  
-8. Seat count is reduced  
-9. PNR generated  
-10. Admin dashboard reflects changes instantly  
+2. Backend inserts data into MySQL  
+3. User logs in  
+4. Searches train  
+5. Books ticket  
+6. Seat count decreases automatically  
+7. Booking record stored with generated PNR  
+
+Admin dashboard reflects changes instantly.
 
 
-# 📚 Key Learnings
+## 📚 Key Learnings
 
-- Importance of Foreign Keys  
 - Database normalization  
-- Maintaining relational consistency  
-- Real-time data updates  
-- Frontend–backend synchronization  
-- Using SQL JOIN operations  
+- Foreign key implementation  
+- Maintaining referential integrity  
+- Using SQL JOIN queries  
+- Backend–database integration  
+- Dynamic UI updates using Fetch API  
 
 
-# 🚧 Challenges Solved
+## 🚀 Future Enhancements
 
-**Problem:** Updating UI without reloading page  
-
-**Solution:** Used JavaScript `fetch()` to dynamically update content using JSON responses from Flask.
-
-
-
-# 🚀 Future Scope
-
-- Payment gateway integration  
-- Seat selection interface  
-- Live train tracking  
-- Password hashing  
-- JWT authentication  
-- Secure session handling  
+- Payment Gateway Integration  
+- Password Hashing  
+- JWT Authentication  
+- Seat Selection Interface  
+- Live Train Tracking  
 
 
 
-# 🛠️ Tech Stack
-
-| Layer     | Technology |
-|-----------|------------|
-| Frontend  | HTML5, Tailwind CSS, JavaScript |
-| Backend   | Python, Flask |
-| Database  | MySQL 8.0 |
-
-
-# 📂 Project Structure
-
-RailConnect/
-│
-├── app.py
-├── backend.py
-├── templates/
-├── static/
-├── DBMS_Report.pdf
-└── README.md
-
-
-
-# 👨‍💻 Contributors
+## 👨‍💻 Contributors
 
 - Pradeep Kumar  
 - Harphool Singh Bajdoliya  
 - Academic Guidance: Dr. Surya Prakash  
 
+## 🎯 Conclusion
 
-# 🎯 Conclusion
+RailConnect demonstrates how relational databases power real-world web applications.  
 
-RailConnect demonstrates how a relational database powers a real-world web application.  
-It shows practical implementation of DBMS concepts through a complete full-stack project.
-
-This project builds a strong foundation for understanding how modern reservation systems work.
+The project successfully integrates SQL constraints, backend logic, and a dynamic frontend to build a functional railway reservation system while reinforcing fundamental DBMS concepts.
